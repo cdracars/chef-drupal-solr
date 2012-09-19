@@ -11,7 +11,7 @@
  package "unzip"
 
   execute "download-php-library-for-solr" do
-    cwd "/var/www/#{ node[:d7][:directory] }/sites/all/libraries"
+    cwd "#{ node['drupal']['dir'] }/sites/all/libraries"
     command "wget http://solr-php-client.googlecode.com/files/SolrPhpClient.r60.2011-05-04.zip"
     not_if do
       File.exists?("SolrPhpClient.r60.2011-05-04.zip")
@@ -19,10 +19,10 @@
   end
 
   execute "unzip-solr-php-library" do
-    cwd "/var/www/#{ node[:d7][:directory] }/sites/all/libraries"
+    cwd "#{ node['drupal']['dir'] }/sites/all/libraries"
     command "unzip SolrPhpClient.r60.2011-05-04.zip && rm -rf SolrPhpClient.r60.2011-05-04.zip"
     not_if do
-      File.exists?("/var/www/#{ node[:d7][:directory] }/sites/all/libraries/SolrPhpClient")
+      File.exists?("#{ node['drupal']['dir'] }/sites/all/libraries/SolrPhpClient")
     end
   end
 
@@ -38,7 +38,7 @@
 
   execute "copy-new-solr-conf-files" do
     cwd "/usr/local/share/apache-solr/example/solr/conf"
-    command "cp /var/www/#{ node[:d7][:directory] }/sites/#{ node[:d7][:site] }/modules/contrib/search_api_solr/schema.xml .; \
-             cp /var/www/#{ node[:d7][:directory] }/sites/#{ node[:d7][:site] }/modules/contrib/search_api_solr/solrconfig.xml .;"
+    command "cp #{ node['drupal']['dir'] }/sites/all/modules/contrib/search_api_solr/schema.xml .; \
+             cp #{ node['drupal']['dir'] }/sites/all/modules/contrib/search_api_solr/solrconfig.xml .;"
     notifies :restart, resources("service[solr]"), :delayed
   end
