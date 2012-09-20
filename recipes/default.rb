@@ -46,7 +46,9 @@
 
   execute "copy-new-solr-conf-files" do
     cwd "/usr/local/share/apache-solr/example/solr/conf"
-    command "cp #{ node['drupal']['dir'] }/sites/all/modules/contrib/search_api_solr/schema.xml .; \
-             cp #{ node['drupal']['dir'] }/sites/all/modules/contrib/search_api_solr/solrconfig.xml .;"
+    command "SCHEMA=`find #{ node['drupal']['dir'] } -name schema.xml`; \
+             CONFIG=`find #{ node['drupal']['dir'] } -name solrconfig.xml`; \
+             cp $SCHEMA .; \
+             cp $CONFIG .;"
     notifies :restart, resources("service[solr]"), :delayed
   end
