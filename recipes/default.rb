@@ -10,6 +10,14 @@
 
  package "unzip"
 
+  directory "#{ node['drupal']['dir'] }/sites/all/libraries" do
+    mode 0755
+    action :create
+    not_if do
+      File.exists?("#{ node['drupal']['dir'] }/sites/all/libraries")
+    end
+  end
+
   execute "download-php-library-for-solr" do
     cwd "#{ node['drupal']['dir'] }/sites/all/libraries"
     command "wget http://solr-php-client.googlecode.com/files/SolrPhpClient.r60.2011-05-04.zip"
