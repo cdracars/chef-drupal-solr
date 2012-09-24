@@ -8,6 +8,9 @@
 #
 # To-Do add attributes to abstract values
 
+require_recipe "drupal"
+require_recipe "solr"
+
  package "unzip"
 
   directory "#{ node['drupal']['dir'] }/sites/all/libraries" do
