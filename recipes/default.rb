@@ -8,8 +8,8 @@
 #
 # To-Do add attributes to abstract values
 
-require_recipe "drupal"
-require_recipe "solr"
+include_recipe "drupal"
+include_recipe "solr"
 
  package "unzip"
 
