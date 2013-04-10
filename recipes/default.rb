@@ -22,7 +22,7 @@ include_recipe "solr"
   end
 
   remote_file "#{ node['drupal']['dir'] }/sites/all/libraries/SolrPhpClient.r60.2011-05-04.zip" do
-    source "wget http://solr-php-client.googlecode.com/files/SolrPhpClient.r60.2011-05-04.zip"
+    source "http://solr-php-client.googlecode.com/files/SolrPhpClient.r60.2011-05-04.zip"
         not_if do
       File.exists?("SolrPhpClient.r60.2011-05-04.zip")
     end
